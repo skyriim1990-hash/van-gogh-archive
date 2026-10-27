@@ -1,4 +1,4 @@
-import { CATEGORIES } from '../data/content.js';
+import { CATEGORIES } from '../data/artworks.js';
 
 /**
  * Presentation helpers.

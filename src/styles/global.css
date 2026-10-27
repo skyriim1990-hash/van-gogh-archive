@@ -53,9 +53,7 @@
   --ink-on-tint: #5f5c56;
 
   /* Inter for body, navigation, metadata and UI. Headings and display type use
-     Playfair Display, set below in --display. The admin panel keeps its own
-     families in src/styles/admin.css; that file has its own :root and is never
-     loaded together with this one. */
+     Playfair Display, set below in --display. */
   --sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   /* Display and headings. */

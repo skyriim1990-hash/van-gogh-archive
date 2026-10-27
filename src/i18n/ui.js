@@ -178,7 +178,7 @@ export const ui = {
     'legal.privacy.p1':
       'Visitors are not asked to sign in or fill in forms. The site sets no tracking cookies and runs no analytics.',
     'legal.privacy.p2':
-      'To show the pages, your browser requests them from Vercel, which hosts the site. The artwork images are served from Supabase Storage, and the typefaces, Inter and Playfair Display, are loaded from Google Fonts. Those requests go to those services directly.',
+      'To show the pages, your browser requests them from Vercel, which hosts the site. The artwork images are served with the pages, and the typefaces, Inter and Playfair Display, are loaded from Google Fonts. Those requests go to those services directly.',
     'legal.privacy.p3':
       'The Contact page lists an email address and has no contact form.',
     'legal.terms.lead':

@@ -1,6 +1,6 @@
 ---
 import ArtworkCard from './ArtworkCard.astro';
-import { artworkIndex } from '../data/content.js';
+import { artworkIndex } from '../data/artworks.js';
 
 /**
  * The works grid — a hung wall, not a listing.
@@ -44,7 +44,7 @@ import { artworkIndex } from '../data/content.js';
 const { items = [], lang = 'en' } = Astro.props;
 
 /**
- * Which way a work faces, from the ratio content.js derived for it.
+ * Which way a work faces, from the ratio in artworks.js.
  *
  * The thresholds are deliberately wide. Anything near square behaves like a
  * landscape here, because a 1:1 work in a wide slot is still a reasonable

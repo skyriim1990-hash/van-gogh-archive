@@ -17,7 +17,7 @@
  */
 
 import { useTranslations, getLangFromUrl } from '../i18n/utils.js';
-import { imageSrcSet } from '../lib/supabase/storage.js';
+import { getImage } from 'astro:assets';
 
 /* The short label is the same string on every frame, so it is read from
    the dictionary here rather than threaded through a dozen call sites.
@@ -42,17 +42,22 @@ const {
 
 const hasImage = Boolean(src);
 
-/* Resized copies from Supabase Storage, so a small frame does not download the
-   full original. `src` stays the original URL as the fallback. The srcset is
-   empty for any image that is not a public Supabase object. */
-const srcset = imageSrcSet(src, [640, 960, 1280, 1600]);
+/* `src` is an imported photograph. Astro writes resized copies at build, and the
+   browser picks one with `sizes`. The original stays as the fallback `src`.
+   Widths above the file's own width are not asked for, so nothing is enlarged. */
+const WIDTHS = [640, 960, 1280, 1600];
+const quality = 85;
 
-/* Browsers do not fall back to `src` when the srcset candidate they chose fails
-   to load. One inline handler does it: drop the srcset and reload the original.
-   `onerror = null` stops it from running twice. Only set when there is a srcset. */
-const fallback = srcset
-  ? "this.onerror=null;this.removeAttribute('srcset');this.removeAttribute('sizes');this.src=this.getAttribute('src')"
-  : undefined;
+let srcset;
+let original = src;
+
+if (hasImage && typeof src === 'object') {
+  const widths = [...WIDTHS.filter((w) => w < src.width), src.width];
+  const copies = await Promise.all(widths.map((width) => getImage({ src, width, format: 'jpg', quality })));
+
+  srcset = copies.map((copy, i) => `${copy.src} ${widths[i]}w`).join(', ');
+  original = src.src;
+}
 ---
 
 <figure
@@ -62,11 +67,10 @@ const fallback = srcset
   {
     hasImage ? (
       <img
-        src={src}
-        srcset={srcset || undefined}
+        src={original}
+        srcset={srcset}
         alt={alt}
         sizes={srcset ? sizes : undefined}
-        onerror={fallback}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         fetchpriority={priority ? 'high' : 'auto'}

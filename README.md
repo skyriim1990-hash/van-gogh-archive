@@ -12,13 +12,12 @@ An independent concept project: a small editorial archive of ten paintings by Vi
 ## Tech
 
 - [Astro](https://astro.build) 5
-- [Supabase](https://supabase.com)
 - [Vercel](https://vercel.com) for hosting
 - GitHub for the source, branch `main`
 
 ## Content
 
-- Ten published artworks. Their metadata and images are read from the project's current data and Supabase setup.
+- Ten artworks. Their data is in `src/data/artworks.js` and the photographs are in `src/assets/artworks/`; Astro resizes them at build.
 - Public routes:
   - `/`
   - `/works`
@@ -26,11 +25,8 @@ An independent concept project: a small editorial archive of ten paintings by Vi
   - `/periods`
   - `/about`
   - `/contact`
-- A private admin area exists separately, under `/admin`, behind a sign-in. It is not part of the public navigation.
 
 ## Development
-
-Configuration for Supabase is described in `.env.example`.
 
 ```bash
 npm install
@@ -50,7 +46,6 @@ https://van-gogh-archive.vercel.app/
 
 - The public site is an independent concept.
 - Artwork facts and content are presented as they are in the current project data.
-- Private and admin functionality is not part of the public navigation.
 
 ## Disclosure
 

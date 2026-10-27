@@ -3,7 +3,7 @@ import Media from '../components/Media.astro';
 import ArtworkCard from '../components/ArtworkCard.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { useTranslations, path } from '../i18n/utils.js';
-import { artworks, homepageArtworks, artworkIndex } from '../data/content.js';
+import { artworks, homepageArtworks, artworkIndex } from '../data/artworks.js';
 import { displayAlt, displayTitle } from '../utils/display.js';
 
 const { lang = 'en' } = Astro.props;
@@ -22,11 +22,6 @@ const shortlist = homepageArtworks(4);
  * the frame stands as a marked placeholder carrying the title of the painting
  * that belongs in it, in the proportions that painting's frame will keep — so
  * importing them changes the pictures and nothing about the layout.
- *
- * The image slots in Admin → Homepage are deliberately not read here: they
- * still hold the previous project's demo files, which do not belong to this
- * archive. Reconnecting that override is a decision for when the real files
- * are uploaded.
  */
 const HERO = [
   { slug: 'sunflowers', title: 'Sunflowers', ratio: '3 / 4', tone: 1 },

@@ -2,7 +2,7 @@
 import PageHeader from '../components/PageHeader.astro';
 import ArtworkGrid from '../components/ArtworkGrid.astro';
 import { useTranslations } from '../i18n/utils.js';
-import { artworks, CATEGORIES } from '../data/content.js';
+import { artworks, CATEGORIES } from '../data/artworks.js';
 
 const { lang = 'en' } = Astro.props;
 const t = useTranslations(lang);

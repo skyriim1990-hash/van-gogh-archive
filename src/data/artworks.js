@@ -1,39 +1,41 @@
 /**
  * ARTWORK DATA
  *
- * Single source of truth for every artwork shown on the site.
- * The grids, the filters, the detail pages and the prev/next navigation
- * are all generated from this array — nothing is hardcoded in a component.
+ * The ten paintings the site is built around, and the one place they are
+ * defined. The grids, the filters, the detail pages and the prev/next
+ * navigation are all generated from this array.
  *
- * ---------------------------------------------------------------------------
- * HOW TO ADD A REAL ARTWORK
- * ---------------------------------------------------------------------------
- * 1. Drop the photograph in  /public/artworks/  (e.g. untitled-2019.jpg)
- * 2. Fill in `image` with the path:  "/artworks/untitled-2019.jpg"
- * 3. Fill in title / year / medium / dimensions / description.
- * 4. Leave `ratio` set to the true aspect ratio of the photograph so the
- *    layout reserves the correct space and nothing shifts while loading.
- *
- * As long as `image` is empty the site renders a clearly labelled
- * placeholder in exactly the same box. Adding real photography therefore
- * requires NO redesign and NO layout change.
+ * Titles, dates, media and dimensions follow the records of the museums that
+ * hold the paintings. The photographs are public-domain reproductions kept in
+ * src/assets/artworks/ and imported below, so Astro can resize them at build.
  *
  * ---------------------------------------------------------------------------
  * FIELDS
  * ---------------------------------------------------------------------------
  * id          string   URL slug, must stay unique and stable
- * title       string   real title, or "" while unknown
- * year        string   real year, or "" while unknown
+ * title       string   title of the painting
+ * year        string   date as printed, e.g. "April–May 1885"
  * category    string   one of the PERIOD ids below (used by the filters)
- * medium      string   e.g. "Oil on canvas", or "" while unknown
- * dimensions  string   e.g. "180 × 140 cm", or "" while unknown
- * image       string   path to the photograph, or "" for a placeholder
- * alt         string   alt text; auto-derived from the title when empty
- * description string   short curatorial note, or "" while unknown
- * ratio       string   CSS aspect-ratio, e.g. "3 / 4"
- * selected    boolean  true = part of SELECTED WORKS + homepage shortlist
+ * medium      string   e.g. "Oil on canvas"
+ * dimensions  string   e.g. "82 × 114 cm"
+ * image       object   the imported photograph
+ * alt         string   alt text; built from title, year and medium when empty
+ * description string   short note, or "" when there is none
+ * ratio       string   CSS aspect-ratio of the photograph, "width / height"
+ * selected    boolean  true = part of the homepage shortlist
  * feature     boolean  true = allowed to occupy a large slot in the grid
  */
+
+import thePotatoEaters from '../assets/artworks/the-potato-eaters.jpg';
+import selfPortraitWithGreyFeltHat from '../assets/artworks/self-portrait-with-grey-felt-hat.jpg';
+import sunflowers from '../assets/artworks/sunflowers.jpg';
+import theYellowHouseTheStreet from '../assets/artworks/the-yellow-house-the-street.jpg';
+import theBedroom from '../assets/artworks/the-bedroom.jpg';
+import wheatfieldWithCrows from '../assets/artworks/wheatfield-with-crows.jpg';
+import terraceOfACafeAtNight from '../assets/artworks/terrace-of-a-cafe-at-night.jpg';
+import vanGoghsChair from '../assets/artworks/van-goghs-chair.jpg';
+import irises from '../assets/artworks/irises.jpg';
+import theStarryNight from '../assets/artworks/the-starry-night.jpg';
 
 /**
  * The periods the archive is arranged by — the places Van Gogh worked, in the
@@ -41,8 +43,7 @@
  *
  * This is a closed vocabulary, not an editorial list: a work belongs to the
  * place it was made in, and there is no sixth place. Slugs carry no accent so
- * they stay valid as URL fragments and as category slugs in the database; the
- * label is where Saint-Rémy keeps its.
+ * they stay valid as URL fragments; the label is where Saint-Rémy keeps its.
  */
 export const PERIODS = [
   { id: 'nuenen', label: 'Nuenen' },
@@ -59,176 +60,148 @@ export const CATEGORIES = [{ id: 'all', label: 'All' }, ...PERIODS];
 
 export const artworks = [
   {
-    id: 'artwork-01',
-    title: '',
-    year: '',
-    category: 'abstract',
-    medium: '',
-    dimensions: '',
-    image: '',
+    id: 'the-potato-eaters',
+    title: 'The Potato Eaters',
+    year: 'April–May 1885',
+    category: 'nuenen',
+    medium: 'Oil on canvas',
+    dimensions: '82 × 114 cm',
+    image: thePotatoEaters,
     alt: '',
     description: '',
-    ratio: '3 / 4',
-    selected: true,
-    feature: true,
-  },
-  {
-    id: 'artwork-02',
-    title: '',
-    year: '',
-    category: 'action-painting',
-    medium: '',
-    dimensions: '',
-    image: '',
-    alt: '',
-    description: '',
-    ratio: '4 / 3',
-    selected: true,
-    feature: false,
-  },
-  {
-    id: 'artwork-03',
-    title: '',
-    year: '',
-    category: 'figurative',
-    medium: '',
-    dimensions: '',
-    image: '',
-    alt: '',
-    description: '',
-    ratio: '1 / 1',
-    selected: true,
-    feature: false,
-  },
-  {
-    id: 'artwork-04',
-    title: '',
-    year: '',
-    category: 'paintings',
-    medium: '',
-    dimensions: '',
-    image: '',
-    alt: '',
-    description: '',
-    ratio: '4 / 5',
-    selected: true,
-    feature: false,
-  },
-  {
-    id: 'artwork-05',
-    title: '',
-    year: '',
-    category: 'abstract',
-    medium: '',
-    dimensions: '',
-    image: '',
-    alt: '',
-    description: '',
-    ratio: '3 / 2',
-    selected: false,
-    feature: true,
-  },
-  {
-    id: 'artwork-06',
-    title: '',
-    year: '',
-    category: 'action-painting',
-    medium: '',
-    dimensions: '',
-    image: '',
-    alt: '',
-    description: '',
-    ratio: '2 / 3',
+    ratio: '1600 / 1131',
     selected: false,
     feature: false,
   },
   {
-    id: 'artwork-07',
-    title: '',
-    year: '',
-    category: 'figurative',
-    medium: '',
-    dimensions: '',
-    image: '',
+    id: 'self-portrait-with-grey-felt-hat',
+    title: 'Self-Portrait with Grey Felt Hat',
+    year: 'September–October 1887',
+    category: 'paris',
+    medium: 'Oil on cotton',
+    dimensions: '44.5 × 37.2 cm',
+    image: selfPortraitWithGreyFeltHat,
     alt: '',
     description: '',
-    ratio: '1 / 1',
-    selected: true,
-    feature: false,
-  },
-  {
-    id: 'artwork-08',
-    title: '',
-    year: '',
-    category: 'paintings',
-    medium: '',
-    dimensions: '',
-    image: '',
-    alt: '',
-    description: '',
-    ratio: '4 / 3',
+    ratio: '1320 / 1600',
     selected: false,
     feature: false,
   },
   {
-    id: 'artwork-09',
-    title: '',
-    year: '',
-    category: 'abstract',
-    medium: '',
-    dimensions: '',
-    image: '',
+    id: 'sunflowers',
+    title: 'Sunflowers',
+    year: 'January 1889',
+    category: 'arles',
+    medium: 'Oil on canvas',
+    dimensions: '95 × 73 cm',
+    image: sunflowers,
     alt: '',
     description: '',
-    ratio: '3 / 4',
+    ratio: '1221 / 1600',
     selected: false,
     feature: false,
   },
   {
-    id: 'artwork-10',
-    title: '',
-    year: '',
-    category: 'action-painting',
-    medium: '',
-    dimensions: '',
-    image: '',
+    id: 'the-yellow-house-the-street',
+    title: 'The Yellow House (The Street)',
+    year: 'September 1888',
+    category: 'arles',
+    medium: 'Oil on canvas',
+    dimensions: '72 × 91.5 cm',
+    image: theYellowHouseTheStreet,
     alt: '',
     description: '',
-    ratio: '5 / 4',
-    selected: true,
-    feature: true,
-  },
-  {
-    id: 'artwork-11',
-    title: '',
-    year: '',
-    category: 'figurative',
-    medium: '',
-    dimensions: '',
-    image: '',
-    alt: '',
-    description: '',
-    ratio: '2 / 3',
+    ratio: '1600 / 1241',
     selected: false,
     feature: false,
   },
   {
-    id: 'artwork-12',
-    title: '',
-    year: '',
-    category: 'paintings',
-    medium: '',
-    dimensions: '',
-    image: '',
+    id: 'the-bedroom',
+    title: 'The Bedroom',
+    year: 'October 1888',
+    category: 'arles',
+    medium: 'Oil on canvas',
+    dimensions: '72.4 × 91.3 cm',
+    image: theBedroom,
     alt: '',
     description: '',
-    ratio: '1 / 1',
+    ratio: '1600 / 1263',
+    selected: false,
+    feature: false,
+  },
+  {
+    id: 'wheatfield-with-crows',
+    title: 'Wheatfield with Crows',
+    year: 'July 1890',
+    category: 'auvers',
+    medium: 'Oil on canvas',
+    dimensions: '50.5 × 103 cm',
+    image: wheatfieldWithCrows,
+    alt: '',
+    description: '',
+    ratio: '1600 / 766',
+    selected: false,
+    feature: false,
+  },
+  {
+    id: 'terrace-of-a-cafe-at-night',
+    title: 'Terrace of a Café at Night (Place du Forum)',
+    year: 'c. 16 September 1888',
+    category: 'arles',
+    medium: 'Oil on canvas',
+    dimensions: '80.7 × 65.3 cm',
+    image: terraceOfACafeAtNight,
+    alt: '',
+    description: '',
+    ratio: '1218 / 1600',
+    selected: false,
+    feature: false,
+  },
+  {
+    id: 'van-goghs-chair',
+    title: 'Van Gogh\'s Chair',
+    year: '1888',
+    category: 'arles',
+    medium: 'Oil on canvas',
+    dimensions: '91.8 × 73 cm',
+    image: vanGoghsChair,
+    alt: '',
+    description: '',
+    ratio: '1263 / 1600',
+    selected: false,
+    feature: false,
+  },
+  {
+    id: 'irises',
+    title: 'Irises',
+    year: '1889',
+    category: 'saint-remy',
+    medium: 'Oil on canvas',
+    dimensions: '74.3 × 94.3 cm',
+    image: irises,
+    alt: '',
+    description: '',
+    ratio: '1600 / 1223',
+    selected: false,
+    feature: false,
+  },
+  {
+    id: 'the-starry-night',
+    title: 'The Starry Night',
+    year: 'June 1889',
+    category: 'saint-remy',
+    medium: 'Oil on canvas',
+    dimensions: '73.7 × 92.1 cm',
+    image: theStarryNight,
+    alt: '',
+    description: '',
+    ratio: '1600 / 1267',
     selected: false,
     feature: false,
   },
 ];
 
-/** Sequential display number, e.g. "4" — also used on the placeholders. */
+/** Sequential display number, e.g. "4". */
 export function artworkIndex(id) {
   const i = artworks.findIndex((a) => a.id === id);
   return String(i + 1);
@@ -236,6 +209,31 @@ export function artworkIndex(id) {
 
 /** `selected: true` items, in data order — used on the homepage. */
 export const selectedArtworks = artworks.filter((a) => a.selected);
+
+/**
+ * The works the homepage composition draws on, best first: `selected` works,
+ * then `feature` works, then plain order. Order is preserved and duplicates
+ * are dropped. Fewer works than slots returns short rather than padded.
+ *
+ * @param {number} limit  how many slots the composition has
+ */
+export function homepageArtworks(limit) {
+  const chosen = [];
+  const seen = new Set();
+
+  for (const group of [selectedArtworks, artworks.filter((a) => a.feature), artworks]) {
+    for (const artwork of group) {
+      if (seen.has(artwork.id)) continue;
+
+      seen.add(artwork.id);
+      chosen.push(artwork);
+
+      if (chosen.length >= limit) return chosen;
+    }
+  }
+
+  return chosen;
+}
 
 /** Neighbours for the prev / next control on a detail page. Wraps around. */
 export function neighbours(id) {
